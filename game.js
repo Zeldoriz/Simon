@@ -52,60 +52,62 @@ $(document).on('keydown', function () {
 })
 
 $(".btn").on('click', function (event) {
-    playerClicks++;
-    var userChosenColor = (event.currentTarget.classList[1])
-    userChosenPattern.push(userChosenColor)
+    if (gameStarted) {
+        playerClicks++;
+        var userChosenColor = (event.currentTarget.classList[1])
+        userChosenPattern.push(userChosenColor)
 
-    var userPressed = $("#" + userChosenColor)
-    userPressed.addClass("pressed")
-    setTimeout(function () {
-        userPressed.removeClass("pressed")
-    }, 100)
-
-    switch (userChosenColor) {
-        case ("red"):
-            var audio = new Audio("sounds/red.mp3")
-            audio.volume = 0.1
-            audio.play()
-            break
-        case ("blue"):
-            var audio = new Audio("sounds/blue.mp3")
-            audio.volume = 0.1
-            audio.play()
-            break
-        case ("green"):
-            var audio = new Audio("sounds/green.mp3")
-            audio.volume = 0.1
-            audio.play()
-            break
-        case ("yellow"):
-            var audio = new Audio("sounds/yellow.mp3")
-            audio.volume = 0.1
-            audio.play()
-            break
-    }
-
-    if (checkAnswer() && userChosenPattern.length == level) {
+        var userPressed = $("#" + userChosenColor)
+        userPressed.addClass("pressed")
         setTimeout(function () {
-            nextSeq()
-            userChosenPattern.splice(0, userChosenPattern.length)
-        }, 1000)
-        console.log("pass")
+            userPressed.removeClass("pressed")
+        }, 100)
 
-    } else if (!checkAnswer()) {
-        $('body').addClass("game-over")
-        $('h1').text("Game Over!")
-        setTimeout(function () {
-            $('body').removeClass("game-over")
-            $('h1').text("Press A Key to Start")
-            gameStarted = false
-            gamePattern.splice(0, gamePattern.length)
-            userChosenPattern.splice(0, userChosenPattern.length)
-            level = 0
-        }, 500)
-        console.log("lost")
+        switch (userChosenColor) {
+            case ("red"):
+                var audio = new Audio("sounds/red.mp3")
+                audio.volume = 0.1
+                audio.play()
+                break
+            case ("blue"):
+                var audio = new Audio("sounds/blue.mp3")
+                audio.volume = 0.1
+                audio.play()
+                break
+            case ("green"):
+                var audio = new Audio("sounds/green.mp3")
+                audio.volume = 0.1
+                audio.play()
+                break
+            case ("yellow"):
+                var audio = new Audio("sounds/yellow.mp3")
+                audio.volume = 0.1
+                audio.play()
+                break
+        }
+
+        if (checkAnswer() && userChosenPattern.length == level) {
+            setTimeout(function () {
+                nextSeq()
+                userChosenPattern.splice(0, userChosenPattern.length)
+            }, 1000)
+            console.log("pass")
+
+        } else if (!checkAnswer()) {
+            $('body').addClass("game-over")
+            $('h1').text("Game Over!")
+            setTimeout(function () {
+                $('body').removeClass("game-over")
+                $('h1').text("Press A Key to Start")
+                gameStarted = false
+                gamePattern.splice(0, gamePattern.length)
+                userChosenPattern.splice(0, userChosenPattern.length)
+                level = 0
+            }, 500)
+            console.log("lost")
+        }
+        // console.log(userChosenPattern.length, level)
     }
-    // console.log(userChosenPattern.length, level)
 })
 
 function checkAnswer() {
